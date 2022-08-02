@@ -1,0 +1,20 @@
+# permissions for end users to view procxes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: procx-viewer-role
+rules:
+- apiGroups:
+  - procx.k8s.lestak.sh
+  resources:
+  - procxes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - procx.k8s.lestak.sh
+  resources:
+  - procxes/status
+  verbs:
+  - get

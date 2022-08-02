@@ -1,0 +1,24 @@
+# permissions for end users to edit procxes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: procx-editor-role
+rules:
+- apiGroups:
+  - procx.k8s.lestak.sh
+  resources:
+  - procxes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - procx.k8s.lestak.sh
+  resources:
+  - procxes/status
+  verbs:
+  - get

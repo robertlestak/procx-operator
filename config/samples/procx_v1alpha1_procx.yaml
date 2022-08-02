@@ -1,0 +1,215 @@
+apiVersion: procx.k8s.lestak.sh/v1alpha1
+kind: ProcX
+metadata:
+  name: procx-sample
+spec:
+  # scalerType: Deployment, Job. Default: Deployment. Optional.
+  scalerType: Deployment
+  # driver: aws-sqs, gcp-pubsub, rabbitmq, redis-list. Required.
+  driver: redis-list
+  # image: docker image to run. assumes entrypoint is "procx". Required.
+  image: example-job-image:my-tag
+  # daemon: boolean daemon mode. Disabled when scalerType=Job. Default false. Optional.
+  daemon: true
+  # hostEnv: boolean pass container env to process. Default false. Optional.
+  hostEnv: true
+  # serviceAccountName: name of service account to attach to pod. Optional.
+  serviceAccountName: my-service-account
+
+  # driver configs
+
+  # awsDynamoDB: aws-dynamodb specific configs when driver=aws-dynamo
+  # awsDynamoDB:
+  #   region: us-east-1
+  #   roleARN: arn:my-role
+  #   table: my-table
+  #   accessKeySecretName: my-access-key
+  #   identityOwner: "pod"
+  #   podIdentityProvider: "aws-eks"
+  #   queryKeyJSONPath: "id.S"
+  #   dataJSONPath: "workData.S"
+  #   retrieveQuery: "SELECT id,workData from my-table WHERE status='pending'"
+  #   clearQuery: "DELETE FROM my-table WHERE id = '{{key}}'"
+  #   failQuery: "UPDATE my-table SET status='failed' WHERE id='{{key}}'"
+  #   scaleTargetValue: "1"
+  #   scaleExpressionAttributeNames: '{ "#id" : "id"}'
+  #   scaleKeyConditionExpression: '#id = :id'
+  #   scaleExpressionAttributeValues: '{ ":id" : {"S":"123"}}'
+
+  # awsSQS: aws-specific configs. Used when driver=aws-sqs
+  # awsSQS:
+  #   region: us-east-1
+  #   roleARN: arn:my-role
+  #   queueURL: https://my-queue
+  #   accessKeySecretName: my-access-key
+  #   queueLength: "1"
+  #   identityOwner: "pod"
+  #   podIdentityProvider: "aws-eks"
+
+  # cassandra: driver=cassandra
+  # cassandra:
+  #   hosts:
+  #   - host-1:9042
+  #   - host-2:9042
+  #   user: username
+  #   password: password
+  #   passwordSecretName: secret-containing-password
+  #   keyspace: mykeyspace
+  #   consistency: QUORUM
+  #   queryReturnsKey: true
+  #   retrieveQuery:
+  #     query: "SELECT id, work FROM mykeyspace.mytable WHERE status = 'pending' LIMIT 1"
+  #   clearQuery:
+  #     query: "DELETE FROM mykeyspace.mytable WHERE id = ?"
+  #     params: ["{{key}}"]
+  #   failureQuery:
+  #     query: "UPDATE mykeyspace.mytable SET status = 'failed' WHERE id = ?"
+  #     params: ["{{key}}"]
+  #   scaleQuery: "SELECT COUNT(*) FROM mykeyspace.mytable WHERE status = 'pending'"
+  #   targetQueryValue: "1"
+
+  # gcpPubSub: gcp-specific configs, used when driver=gcp-pubsub
+  # gcpPubSub:
+  #   projectId: my-project
+  #   subscriptionName: my-sub
+  #   credentialsSecretName: secret-containing-auth-json
+  #   mode: "SubscriptionSize"
+  #   value: "1"
+  #   podIdentityProvider: "gcp"
+
+  # mongodb: mongo specific configs, when driver=mongodb
+  # mongodb:
+  #   host: mongodb
+  #   port: 27017
+  #   user: username
+  #   password: passwordString
+  #   passwordSecretName: secret-containing-password
+  #   dbName: mydb
+  #   collection: my-collection
+  #   retrieveQuery: '{"status": "pending"}'
+  #   failureQuery: '{"update":"my-collection","updates":[{"q":{"_id":{"$oid":"{{key}}"}},"u":{"$set": {"failed":true}}}]}'
+  #   clearQuery: '{"delete": "my-collection", "deletes": [{"q": {"_id": {"$oid": "{{key}}"}}, "limit": 1}]}'
+  #   queryValue: 1
+  #   scaleQuery: '{"status": "pending"}'
+
+  # mysql: mysql-specific configs, when driver=mysql
+  # mysql:
+  #   host: mysql
+  #   port: 3306
+  #   user: username
+  #   password: passwordString
+  #   passwordSecretName: secret-containing-password
+  #   dbName: mydb
+  #   queryReturnsKey: true
+  #   retrieveQuery:
+  #     query: 'select id,work from jobs where queue = ? order by id asc limit 1'
+  #     params:
+  #     - myqueue
+  #   failureQuery:
+  #     query: 'update jobs set failed_count = failed_count + 1 where queue = ? and id = ?'
+  #     params:
+  #     - myqueue
+  #     - {{key}}
+  #   clearQuery:
+  #     query: 'delete from jobs where queue = ? and id = ?'
+  #     params:
+  #     - myqueue
+  #     - {{key}}
+  #   targetQueryValue: 1
+  #   scaleQuery: "select count(id) from jobs where queue = 'myqueue'"  
+
+
+  # postgres: postgres-specific configs, when driver=postgres
+  # postgres:
+  #   host: postgres
+  #   port: 5432
+  #   user: username
+  #   password: passwordString
+  #   passwordSecretName: secret-containing-password
+  #   dbName: mydb
+  #   sslMode: disable
+  #   queryReturnsKey: true
+  #   retrieveQuery:
+  #     query: 'select id,work from jobs where queue = $1 order by id asc limit 1'
+  #     params:
+  #     - myqueue
+  #   failureQuery:
+  #     query: 'update jobs set failed_count = failed_count + 1 where queue = $1 and id = $2'
+  #     params:
+  #     - myqueue
+  #     - {{key}}
+  #   clearQuery:
+  #     query: 'delete from jobs where queue = $1 and id = $2'
+  #     params:
+  #     - myqueue
+  #     - {{key}}
+  #   targetQueryValue: 1
+  #   scaleQuery: "select count(id) from jobs where queue = 'myqueue'"
+
+  # rabbitmq: rabbitmq specific configs, used when driver=rabbitmq
+  # rabbitmq:
+  #   url: amqp://user:pass@rabbitmq/
+  #   urlSecretName: secret-containing-url
+  #   queue: my-queue
+  #   mode: "QueueLength"
+  #   value: "1"
+
+  # redisList: redis specific configs, used when driver=redis-list,redis-pubsub
+  # redisList:
+  #   host: redis
+  #   port: 6379
+  #   password: my-pass
+  #   #passwordSecretName: secret-containing-password
+  #   key: redis-key
+  #   listLength: "1"
+
+  # optional configs
+
+  # backoffLimit: int times before considering job failed. Only used when scalerType=Job. Default 6. Optional.
+  # backoffLimit: 10
+  # minReplicas: int minimum number of replicas when scalerType=Deployment. Default 0. Optional.
+  # minReplicas: 0
+  # maxReplicas: int max number of replicas when scalerType=Deployment. Default 100. Optional.
+  # maxReplicas: 100
+  # coolDownPeriod: int seconds before scaling down Deployment to minReplicas. Default 300. Optional.
+  # coolDownPeriod: 300
+  # pollingInterval: int seconds to check data source queue. Default 30. Optional.
+  # pollingInterval: 30
+
+  # envSecretNames: array of string secret names to mount to container as environment variables. Optional.
+  # envSecretNames: [my-secret, my-other-secret]
+
+  # commonLabels: map[string]string of labels to associate with all resources. Default empty. Optional.
+  # commonLabels:
+  #   hello: world
+  #   another: value
+
+  # resources: k8s resource definition for job container. Default empty. Optional.
+  # resources:
+  #   limits:
+  #     cpu: 500m
+  #     memory: 500Mi
+  #   requests:
+  #     cpu: 500m
+  #     memory: 500M1
+
+  # volumeMounts: k8s volume mounts for job pod. Default empty. Optional.
+  # volumeMounts:
+  # - name: my-vol
+  #   mountPath: /data/path
+
+  # volumes: k8s volumes for job pod. Default empty. Optional.
+  # volumes:
+  # - name: my-vol
+  #   persistentVolumeClaim:
+  #     claimName: my-claim
+
+  # imagePullSecrets: optional image pull secrets for job image
+  # imagePullSecrets:
+  # - name: regcred
+
+  # podTemplate: k8s pod template to override ProcX. Default empty (let ProcX create pod template). Optional.
+  # podTemplate: {}
+
+
+
