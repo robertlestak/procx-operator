@@ -15,6 +15,12 @@ type RedisList struct {
 	PasswordSecretName *string `json:"passwordSecretName,omitempty"`
 	Key                string  `json:"key"`
 	ListLength         *string `json:"listLength,omitempty"`
+	// TLS
+	EnableTLS   *bool   `json:"enableTLS,omitempty"`
+	TLSInsecure *bool   `json:"tlsInsecure,omitempty"`
+	TLSCert     *string `json:"tlsCert,omitempty"`
+	TLSKey      *string `json:"tlsKey,omitempty"`
+	TLSCA       *string `json:"tlsCA,omitempty"`
 }
 
 func (d *RedisList) ConfigSecret() map[string]string {
@@ -25,6 +31,21 @@ func (d *RedisList) ConfigSecret() map[string]string {
 		secData["PROCX_REDIS_PORT"] = strconv.Itoa(int(d.Port))
 		if d.Password != nil {
 			secData["PROCX_REDIS_PASSWORD"] = *d.Password
+		}
+		if d.EnableTLS != nil && *d.EnableTLS {
+			secData["PROCX_REDIS_STREAM_ENABLE_TLS"] = "true"
+		}
+		if d.TLSInsecure != nil && *d.TLSInsecure {
+			secData["PROCX_REDIS_STREAM_TLS_INSECURE"] = "true"
+		}
+		if d.TLSCert != nil {
+			secData["PROCX_REDIS_STREAM_TLS_CERT_FILE"] = *d.TLSCert
+		}
+		if d.TLSKey != nil {
+			secData["PROCX_REDIS_STREAM_TLS_KEY_FILE"] = *d.TLSKey
+		}
+		if d.TLSCA != nil {
+			secData["PROCX_REDIS_STREAM_TLS_CA_FILE"] = *d.TLSCA
 		}
 	}
 	return secData

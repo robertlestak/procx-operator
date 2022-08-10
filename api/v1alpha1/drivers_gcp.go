@@ -1,5 +1,14 @@
 package v1alpha1
 
+type GCPBQ struct {
+	ProjectID     string  `json:"projectId"`
+	Key           *string `json:"key,omitempty"`
+	QueryKey      *bool   `json:"queryKey,omitempty"`
+	RetrieveQuery *string `json:"retrieveQuery,omitempty"`
+	ClearQuery    *string `json:"clearQuery,omitempty"`
+	FailQuery     *string `json:"failQuery,omitempty"`
+}
+
 type GCPPubSub struct {
 	ProjectID             string  `json:"projectId"`
 	SubscriptionName      string  `json:"subscriptionName"`

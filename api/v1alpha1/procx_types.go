@@ -46,15 +46,22 @@ type ProcXSpec struct {
 	AWSSQS             *AWSSQS                        `json:"awsSQS,omitempty"`
 	AWSS3              *AWSS3                         `json:"awsS3,omitempty"`
 	Cassandra          *Cassandra                     `json:"cassandra,omitempty"`
+	Centauri           *Centauri                      `json:"centauri,omitempty"`
 	Elasticsearch      *Elasticsearch                 `json:"elasticsearch,omitempty"`
+	GCPBQ              *GCPBQ                         `json:"gcpBQ,omitempty"`
 	GCPPubSub          *GCPPubSub                     `json:"gcpPubSub,omitempty"`
 	GCPGCS             *GCPGCS                        `json:"gcpGCS,omitempty"`
 	Kafka              *Kafka                         `json:"kafka,omitempty"`
 	MongoDB            *MongoDB                       `json:"mongodb,omitempty"`
 	MySQL              *MySQL                         `json:"mysql,omitempty"`
+	NATS               *NATS                          `json:"nats,omitempty"`
+	NFS                *NFS                           `json:"nfs,omitempty"`
+	NSQ                *NSQ                           `json:"nsq,omitempty"`
 	Postgres           *Postgres                      `json:"postgres,omitempty"`
 	RabbitMQ           *RabbitMQ                      `json:"rabbitmq,omitempty"`
 	RedisList          *RedisList                     `json:"redisList,omitempty"`
+	RedisPubSub        *RedisPubSub                   `json:"redisPubSub,omitempty"`
+	RedisStream        *RedisStream                   `json:"redisStream,omitempty"`
 	Image              string                         `json:"image"`
 	HostEnv            *bool                          `json:"hostEnv,omitempty"`
 	Daemon             *bool                          `json:"daemon,omitempty"`
