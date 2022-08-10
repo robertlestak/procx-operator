@@ -44,8 +44,12 @@ type ProcXSpec struct {
 	DriverName         drivers.DriverName             `json:"driver"`
 	AWSDynamoDB        *AWSDynamoDB                   `json:"awsDynamoDB,omitempty"`
 	AWSSQS             *AWSSQS                        `json:"awsSQS,omitempty"`
+	AWSS3              *AWSS3                         `json:"awsS3,omitempty"`
 	Cassandra          *Cassandra                     `json:"cassandra,omitempty"`
+	Elasticsearch      *Elasticsearch                 `json:"elasticsearch,omitempty"`
 	GCPPubSub          *GCPPubSub                     `json:"gcpPubSub,omitempty"`
+	GCPGCS             *GCPGCS                        `json:"gcpGCS,omitempty"`
+	Kafka              *Kafka                         `json:"kafka,omitempty"`
 	MongoDB            *MongoDB                       `json:"mongodb,omitempty"`
 	MySQL              *MySQL                         `json:"mysql,omitempty"`
 	Postgres           *Postgres                      `json:"postgres,omitempty"`
