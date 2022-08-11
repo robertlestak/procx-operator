@@ -17,15 +17,15 @@ var (
 )
 
 type RedisStream struct {
-	Host               string    `json:"host"`
-	Port               string    `json:"port"`
-	Password           *string   `json:"password,omitempty"`
-	PasswordSecretName *string   `json:"passwordSecretName,omitempty"`
-	ConsumerName       *string   `json:"consumerName,omitempty"`
-	ConsumerGroup      *string   `json:"consumerGroup,omitempty"`
-	Key                *string   `json:"key"`
-	ValueKeys          *[]string `json:"valueKeys,omitempty"`
-	MessageID          *string
+	Host               string         `json:"host"`
+	Port               string         `json:"port"`
+	Password           *string        `json:"password,omitempty"`
+	PasswordSecretName *string        `json:"passwordSecretName,omitempty"`
+	ConsumerName       *string        `json:"consumerName,omitempty"`
+	ConsumerGroup      *string        `json:"consumerGroup,omitempty"`
+	Key                *string        `json:"key"`
+	ValueKeys          *[]string      `json:"valueKeys,omitempty"`
+	MessageID          *string        `json:"messageID,omitempty"`
 	ClearOp            *RedisStreamOp `json:"clearOp,omitempty"`
 	FailOp             *RedisStreamOp `json:"failOp,omitempty"`
 	// TLS

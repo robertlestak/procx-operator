@@ -68,6 +68,55 @@ spec:
                   table:
                     type: string
                 type: object
+              awsS3:
+                properties:
+                  accessKeySecretName:
+                    type: string
+                  bucket:
+                    type: string
+                  clearOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    required:
+                    - operation
+                    type: object
+                  failOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    required:
+                    - operation
+                    type: object
+                  identityOwner:
+                    type: string
+                  key:
+                    type: string
+                  keyPrefix:
+                    type: string
+                  keyRegex:
+                    type: string
+                  podIdentityProvider:
+                    type: string
+                  region:
+                    type: string
+                  roleARN:
+                    type: string
+                required:
+                - bucket
+                type: object
               awsSQS:
                 properties:
                   accessKeySecretName:
@@ -162,6 +211,24 @@ spec:
                 - targetQueryValue
                 - user
                 type: object
+              centauri:
+                properties:
+                  channel:
+                    type: string
+                  key:
+                    type: string
+                  privateKey:
+                    format: byte
+                    type: string
+                  privateKeySecretName:
+                    type: string
+                  tlsSecretName:
+                    type: string
+                  url:
+                    type: string
+                required:
+                - url
+                type: object
               commonLabels:
                 additionalProperties:
                   type: string
@@ -184,10 +251,126 @@ spec:
                 - redis-list
                 - redis-pubsub
                 type: string
+              elasticsearch:
+                properties:
+                  address:
+                    type: string
+                  clearIndex:
+                    type: string
+                  clearOp:
+                    type: string
+                  clearQuery:
+                    type: string
+                  enableTLS:
+                    description: TLS
+                    type: boolean
+                  failIndex:
+                    type: string
+                  failOp:
+                    type: string
+                  failQuery:
+                    type: string
+                  key:
+                    type: string
+                  password:
+                    type: string
+                  passwordSecretName:
+                    type: string
+                  retrieveIndex:
+                    type: string
+                  retrieveQuery:
+                    type: string
+                  retrieveSearchActivationTargetValue:
+                    type: string
+                  retrieveSearchParams:
+                    type: string
+                  retrieveSearchTargetValue:
+                    type: string
+                  retrieveSearchTemplate:
+                    type: string
+                  retrieveSearchValueLocation:
+                    type: string
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    type: string
+                  username:
+                    type: string
+                type: object
               envSecretNames:
                 items:
                   type: string
                 type: array
+              gcpBQ:
+                properties:
+                  clearQuery:
+                    type: string
+                  failQuery:
+                    type: string
+                  key:
+                    type: string
+                  projectId:
+                    type: string
+                  queryKey:
+                    type: boolean
+                  retrieveQuery:
+                    type: string
+                required:
+                - projectId
+                type: object
+              gcpGCS:
+                properties:
+                  activationObjectCount:
+                    type: string
+                  bucket:
+                    type: string
+                  clearOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    type: object
+                  credentialsSecretName:
+                    type: string
+                  failOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    type: object
+                  key:
+                    type: string
+                  keyPrefix:
+                    type: string
+                  keyRegex:
+                    type: string
+                  maxBucketItemsToScan:
+                    type: string
+                  podIdentityProvider:
+                    type: string
+                  projectId:
+                    type: string
+                  targetObjectCount:
+                    type: string
+                required:
+                - credentialsSecretName
+                type: object
               gcpPubSub:
                 properties:
                   credentialsSecretName:
@@ -222,6 +405,53 @@ spec:
                       type: string
                   type: object
                 type: array
+              kafka:
+                properties:
+                  activationThreshold:
+                    type: string
+                  allowIdleConsumers:
+                    type: boolean
+                  brokers:
+                    items:
+                      type: string
+                    type: array
+                  enableSASL:
+                    description: SASL
+                    type: boolean
+                  enableTLS:
+                    type: boolean
+                  group:
+                    type: string
+                  lagThreshold:
+                    type: string
+                  offsetResetPolicy:
+                    type: string
+                  password:
+                    type: string
+                  passwordSecretName:
+                    type: string
+                  saslType:
+                    type: string
+                  scaleToZeroOnInvalidOffset:
+                    type: boolean
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                  topic:
+                    type: string
+                  username:
+                    type: string
+                  version:
+                    type: string
+                type: object
               maxReplicas:
                 format: int32
                 type: integer
@@ -339,6 +569,110 @@ spec:
                 - scaleQuery
                 - targetQueryValue
                 - user
+                type: object
+              nats:
+                properties:
+                  clearResponse:
+                    type: string
+                  credsFile:
+                    type: string
+                  enableTLS:
+                    type: boolean
+                  failResponse:
+                    type: string
+                  jwtFile:
+                    type: string
+                  nkeyFile:
+                    type: string
+                  password:
+                    type: string
+                  passwordSecretName:
+                    type: string
+                  queueGroup:
+                    type: string
+                  subject:
+                    type: string
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    type: string
+                  token:
+                    type: string
+                  tokenSecretName:
+                    type: string
+                  url:
+                    type: string
+                  username:
+                    type: string
+                type: object
+              nfs:
+                properties:
+                  clearOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    type: object
+                  failOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    type: object
+                  folder:
+                    type: string
+                  host:
+                    type: string
+                  key:
+                    type: string
+                  keyPrefix:
+                    type: string
+                  keyRegex:
+                    type: string
+                  mountPath:
+                    type: string
+                  target:
+                    type: string
+                type: object
+              nsq:
+                properties:
+                  channel:
+                    type: string
+                  enableTLS:
+                    type: boolean
+                  nsqLookupdAddress:
+                    type: string
+                  nsqdAddress:
+                    type: string
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                  topic:
+                    type: string
                 type: object
               podTemplate:
                 description: PodTemplateSpec describes the data a pod should have
@@ -7520,6 +7854,8 @@ spec:
                 type: object
               redisList:
                 properties:
+                  enableTLS:
+                    type: boolean
                   host:
                     type: string
                   key:
@@ -7532,6 +7868,92 @@ spec:
                     type: string
                   port:
                     type: integer
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                required:
+                - host
+                - key
+                - port
+                type: object
+              redisPubSub:
+                properties:
+                  enableTLS:
+                    type: boolean
+                  host:
+                    type: string
+                  key:
+                    type: string
+                  password:
+                    type: string
+                  passwordSecretName:
+                    type: string
+                  port:
+                    type: string
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                required:
+                - host
+                - port
+                type: object
+              redisStream:
+                properties:
+                  clearOp:
+                    type: string
+                  consumerGroup:
+                    type: string
+                  consumerName:
+                    type: string
+                  enableTLS:
+                    type: boolean
+                  failOp:
+                    type: string
+                  host:
+                    type: string
+                  key:
+                    type: string
+                  messageID:
+                    type: string
+                  password:
+                    type: string
+                  passwordSecretName:
+                    type: string
+                  pendingEntriesCount:
+                    type: string
+                  port:
+                    type: string
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                  valueKeys:
+                    items:
+                      type: string
+                    type: array
                 required:
                 - host
                 - key
