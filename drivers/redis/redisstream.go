@@ -153,3 +153,11 @@ func (d *RedisStream) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticati
 	}
 	return s
 }
+
+func (d *RedisStream) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *RedisStream) Volumes() []corev1.Volume {
+	return nil
+}

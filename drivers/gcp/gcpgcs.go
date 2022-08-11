@@ -130,3 +130,11 @@ func (d *GCPGCS) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpe
 	}
 	return s
 }
+
+func (d *GCPGCS) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *GCPGCS) Volumes() []corev1.Volume {
+	return nil
+}

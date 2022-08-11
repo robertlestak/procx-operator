@@ -105,3 +105,11 @@ func (d *RedisPubSub) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticati
 	}
 	return s
 }
+
+func (d *RedisPubSub) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *RedisPubSub) Volumes() []corev1.Volume {
+	return nil
+}

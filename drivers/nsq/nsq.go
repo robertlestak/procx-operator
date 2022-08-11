@@ -76,3 +76,11 @@ func (d *NSQ) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec {
 	s := &kedav1alpha1.TriggerAuthenticationSpec{}
 	return s
 }
+
+func (d *NSQ) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *NSQ) Volumes() []corev1.Volume {
+	return nil
+}

@@ -136,3 +136,11 @@ func (d *AWSDynamoDB) ContainerEnv() []corev1.EnvFromSource {
 	}
 	return envFrom
 }
+
+func (d *AWSDynamoDB) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *AWSDynamoDB) Volumes() []corev1.Volume {
+	return nil
+}

@@ -115,3 +115,11 @@ func (d *Cassandra) Metadata() map[string]string {
 	}
 	return md
 }
+
+func (d *Cassandra) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *Cassandra) Volumes() []corev1.Volume {
+	return nil
+}

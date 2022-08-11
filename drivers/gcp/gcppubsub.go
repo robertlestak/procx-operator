@@ -72,3 +72,11 @@ func (d *GCPPubSub) TriggerAuth(name string) *kedav1alpha1.TriggerAuthentication
 	}
 	return s
 }
+
+func (d *GCPPubSub) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *GCPPubSub) Volumes() []corev1.Volume {
+	return nil
+}

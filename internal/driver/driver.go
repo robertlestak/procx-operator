@@ -13,4 +13,6 @@ type Driver interface {
 	KedaScalerName() string
 	ContainerEnv() []corev1.EnvFromSource
 	TriggerAuth(string) *kedav1alpha1.TriggerAuthenticationSpec
+	VolumeMounts() []corev1.VolumeMount
+	Volumes() []corev1.Volume
 }

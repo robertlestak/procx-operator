@@ -161,3 +161,11 @@ func (d *NATS) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec 
 	}
 	return s
 }
+
+func (d *NATS) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *NATS) Volumes() []corev1.Volume {
+	return nil
+}

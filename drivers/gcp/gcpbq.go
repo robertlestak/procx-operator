@@ -62,3 +62,11 @@ func (d *GCPBQ) ContainerEnv() []corev1.EnvFromSource {
 	envFrom := []corev1.EnvFromSource{}
 	return envFrom
 }
+
+func (d *GCPBQ) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *GCPBQ) Volumes() []corev1.Volume {
+	return nil
+}

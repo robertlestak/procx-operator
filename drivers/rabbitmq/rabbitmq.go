@@ -87,3 +87,11 @@ func (d *RabbitMQ) TriggerAuth(string) *kedav1alpha1.TriggerAuthenticationSpec {
 	}
 	return s
 }
+
+func (d *RabbitMQ) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *RabbitMQ) Volumes() []corev1.Volume {
+	return nil
+}

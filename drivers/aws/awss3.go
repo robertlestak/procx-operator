@@ -153,3 +153,11 @@ func (d *AWSS3) ContainerEnv() []corev1.EnvFromSource {
 	}
 	return envFrom
 }
+
+func (d *AWSS3) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *AWSS3) Volumes() []corev1.Volume {
+	return nil
+}

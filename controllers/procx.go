@@ -54,6 +54,7 @@ func (r *ProcXReconciler) podTemplateForProcX(m *procxv1alpha1.ProcX) corev1.Pod
 		cont.VolumeMounts = *m.Spec.VolumeMounts
 	}
 
+	cont.VolumeMounts = append(cont.VolumeMounts, Driver(m).VolumeMounts()...)
 	cont.EnvFrom = r.envForContainer(m)
 
 	podTemplate := corev1.PodTemplateSpec{
@@ -93,6 +94,7 @@ func (r *ProcXReconciler) podTemplateForProcX(m *procxv1alpha1.ProcX) corev1.Pod
 	if m.Spec.Volumes != nil {
 		podTemplate.Spec.Volumes = *m.Spec.Volumes
 	}
+	podTemplate.Spec.Volumes = append(podTemplate.Spec.Volumes, Driver(m).Volumes()...)
 
 	if m.Spec.ServiceAccountName != nil {
 		podTemplate.Spec.ServiceAccountName = *m.Spec.ServiceAccountName

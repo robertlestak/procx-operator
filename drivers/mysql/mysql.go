@@ -114,3 +114,11 @@ func (d *MySQL) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec
 	}
 	return s
 }
+
+func (d *MySQL) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *MySQL) Volumes() []corev1.Volume {
+	return nil
+}

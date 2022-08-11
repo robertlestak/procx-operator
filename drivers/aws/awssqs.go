@@ -109,3 +109,11 @@ func (d *AWSSQS) ContainerEnv() []corev1.EnvFromSource {
 	}
 	return envFrom
 }
+
+func (d *AWSSQS) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *AWSSQS) Volumes() []corev1.Volume {
+	return nil
+}

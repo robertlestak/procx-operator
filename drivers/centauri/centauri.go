@@ -67,3 +67,11 @@ func (d *Centauri) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationS
 	s := &kedav1alpha1.TriggerAuthenticationSpec{}
 	return s
 }
+
+func (d *Centauri) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *Centauri) Volumes() []corev1.Volume {
+	return nil
+}

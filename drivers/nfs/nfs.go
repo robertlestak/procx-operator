@@ -111,3 +111,11 @@ func (d *NFS) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec {
 	s := &kedav1alpha1.TriggerAuthenticationSpec{}
 	return s
 }
+
+func (d *NFS) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *NFS) Volumes() []corev1.Volume {
+	return nil
+}

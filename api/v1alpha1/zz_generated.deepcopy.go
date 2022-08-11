@@ -459,6 +459,11 @@ func (in *Elasticsearch) DeepCopyInto(out *Elasticsearch) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
+		*out = new(string)
+		**out = **in
+	}
 	if in.RetrieveIndex != nil {
 		in, out := &in.RetrieveIndex, &out.RetrieveIndex
 		*out = new(string)

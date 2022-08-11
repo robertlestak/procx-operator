@@ -25,6 +25,7 @@ type Elasticsearch struct {
 	TLSCert                             *string               `json:"tlsCert,omitempty"`
 	TLSKey                              *string               `json:"tlsKey,omitempty"`
 	TLSCA                               *string               `json:"tlsCA,omitempty"`
+	TLSSecretName                       *string               `json:"tlsSecretName,omitempty"`
 	RetrieveIndex                       *string               `json:"retrieveIndex,omitempty"`
 	RetrieveSearchTemplate              *string               `json:"retrieveSearchTemplate,omitempty"`
 	RetrieveSearchParams                *string               `json:"retrieveSearchParams,omitempty"`
@@ -156,6 +157,14 @@ func (d *Elasticsearch) ContainerEnv() []corev1.EnvFromSource {
 		})
 	}
 	return envFrom
+}
+
+func (d *Elasticsearch) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *Elasticsearch) Volumes() []corev1.Volume {
+	return nil
 }
 
 func (d *Elasticsearch) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec {

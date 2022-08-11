@@ -167,3 +167,11 @@ func (d *Kafka) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec
 	}
 	return s
 }
+
+func (d *Kafka) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *Kafka) Volumes() []corev1.Volume {
+	return nil
+}

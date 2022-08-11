@@ -116,3 +116,11 @@ func (d *RedisList) TriggerAuth(name string) *kedav1alpha1.TriggerAuthentication
 	}
 	return s
 }
+
+func (d *RedisList) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *RedisList) Volumes() []corev1.Volume {
+	return nil
+}

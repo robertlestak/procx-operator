@@ -115,3 +115,11 @@ func (d *MongoDB) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSp
 	}
 	return s
 }
+
+func (d *MongoDB) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *MongoDB) Volumes() []corev1.Volume {
+	return nil
+}

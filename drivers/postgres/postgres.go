@@ -117,3 +117,11 @@ func (d *Postgres) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationS
 	}
 	return s
 }
+
+func (d *Postgres) VolumeMounts() []corev1.VolumeMount {
+	return nil
+}
+
+func (d *Postgres) Volumes() []corev1.Volume {
+	return nil
+}

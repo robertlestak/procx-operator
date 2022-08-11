@@ -25,6 +25,7 @@ type Elasticsearch struct {
 	TLSCert       *string               `json:"tlsCert,omitempty"`
 	TLSKey        *string               `json:"tlsKey,omitempty"`
 	TLSCA         *string               `json:"tlsCA,omitempty"`
+	TLSSecretName *string               `json:"tlsSecretName,omitempty"`
 	RetrieveIndex *string               `json:"retrieveIndex,omitempty"`
 	RetrieveQuery *string               `json:"retrieveQuery,omitempty"`
 	ClearQuery    *string               `json:"clearQuery,omitempty"`
