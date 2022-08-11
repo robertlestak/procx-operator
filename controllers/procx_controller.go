@@ -22,6 +22,7 @@ import (
 
 	kedav1alpha1 "github.com/kedacore/keda/v2/apis/keda/v1alpha1"
 	procxv1alpha1 "github.com/robertlestak/procx-operator/api/v1alpha1"
+	"github.com/robertlestak/procx-operator/internal/driver"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/labels"
@@ -88,6 +89,62 @@ func (r *ProcXReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 		l.Error(errors.New("Driver is not set"), "Driver is not set")
 		return ctrl.Result{}, nil
 	}
+	if driver.KedaSupport() {
+		return r.KedaReconciler(ctx, req, job, driver)
+	} else {
+		// this driver currently does not have a corresponding keda scaler
+		// so we will need to create a deployment, and set the DAEMON flag to true
+		// this will run the procx as a single deployment and poll the queue for messages
+		// this is not as efficient as a keda scaler, but is the simplest way to get the job running
+		return r.DeploymentReconciler(ctx, req, job, driver)
+	}
+}
+
+func (r *ProcXReconciler) DeploymentReconciler(ctx context.Context, req ctrl.Request, job *procxv1alpha1.ProcX, driver driver.Driver) (ctrl.Result, error) {
+	l := log.Log.WithValues("procx", job.Name)
+	// as there is no keda support for this driver, we will need to create a deployment
+	// and set the DAEMON flag to true
+	trueval := true
+	job.Spec.Daemon = &trueval
+	sres, err := r.handleConfigSecret(ctx, job)
+	if err != nil {
+		return ctrl.Result{}, err
+	}
+	if sres != nil {
+		return ctrl.Result{}, nil
+	}
+	res, err := r.handleDeployment(ctx, job)
+	if err != nil {
+		l.Info("Error handling Deployment", "error", err)
+		return ctrl.Result{}, err
+	}
+	if res != nil {
+		l.Info("Requeueing Procx", "result", res)
+		return *res, nil
+	}
+	l.Info("listing pods")
+	podList := &corev1.PodList{}
+	listOpts := []client.ListOption{
+		client.InNamespace(job.Namespace),
+		client.MatchingLabels(labelsForApp(job)),
+	}
+	if err = r.List(ctx, podList, listOpts...); err != nil {
+		l.Info("Error listing pods", "error", err)
+		return ctrl.Result{}, err
+	}
+	podNames := getPodNames(podList.Items)
+	job.Status.Pods = podNames
+	job.Status.Status = "Ready"
+	if err := r.Status().Update(ctx, job); err != nil {
+		l.Info("Error updating Procx status", "error", err)
+		return ctrl.Result{}, err
+	}
+	l.Info("Reconciled Procx", "status", job.Status)
+	return ctrl.Result{}, nil
+}
+
+func (r *ProcXReconciler) KedaReconciler(ctx context.Context, req ctrl.Request, job *procxv1alpha1.ProcX, driver driver.Driver) (ctrl.Result, error) {
+	l := log.Log.WithValues("procx", job.Name)
 	sres, err := r.handleConfigSecret(ctx, job)
 	if err != nil {
 		return ctrl.Result{}, err
