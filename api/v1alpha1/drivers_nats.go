@@ -12,6 +12,7 @@ type NATS struct {
 	PasswordSecretName *string `json:"passwordSecretName,omitempty"`
 	Token              *string `json:"token,omitempty"`
 	TokenSecretName    *string `json:"tokenSecretName,omitempty"`
+	TLSSecretName      *string `json:"tlsSecretName,omitempty"`
 	EnableTLS          *bool   `json:"enableTLS,omitempty"`
 	TLSInsecure        *bool   `json:"tlsInsecure,omitempty"`
 	TLSCA              *string `json:"tlsCA,omitempty"`

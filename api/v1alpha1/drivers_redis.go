@@ -8,11 +8,12 @@ type RedisList struct {
 	Key                string  `json:"key"`
 	ListLength         *string `json:"listLength,omitempty"`
 	// TLS
-	EnableTLS   *bool   `json:"enableTLS,omitempty"`
-	TLSInsecure *bool   `json:"tlsInsecure,omitempty"`
-	TLSCert     *string `json:"tlsCert,omitempty"`
-	TLSKey      *string `json:"tlsKey,omitempty"`
-	TLSCA       *string `json:"tlsCA,omitempty"`
+	TLSSecretName *string `json:"tlsSecretName,omitempty"`
+	EnableTLS     *bool   `json:"enableTLS,omitempty"`
+	TLSInsecure   *bool   `json:"tlsInsecure,omitempty"`
+	TLSCert       *string `json:"tlsCert,omitempty"`
+	TLSKey        *string `json:"tlsKey,omitempty"`
+	TLSCA         *string `json:"tlsCA,omitempty"`
 }
 
 type RedisPubSub struct {
@@ -22,11 +23,12 @@ type RedisPubSub struct {
 	PasswordSecretName *string `json:"passwordSecretName,omitempty"`
 	Key                *string `json:"key,omitempty"`
 	// TLS
-	EnableTLS   *bool   `json:"enableTLS,omitempty"`
-	TLSInsecure *bool   `json:"tlsInsecure,omitempty"`
-	TLSCert     *string `json:"tlsCert,omitempty"`
-	TLSKey      *string `json:"tlsKey,omitempty"`
-	TLSCA       *string `json:"tlsCA,omitempty"`
+	TLSSecretName *string `json:"tlsSecretName,omitempty"`
+	EnableTLS     *bool   `json:"enableTLS,omitempty"`
+	TLSInsecure   *bool   `json:"tlsInsecure,omitempty"`
+	TLSCert       *string `json:"tlsCert,omitempty"`
+	TLSKey        *string `json:"tlsKey,omitempty"`
+	TLSCA         *string `json:"tlsCA,omitempty"`
 }
 
 type RedisStreamOp string
@@ -49,6 +51,7 @@ type RedisStream struct {
 	ClearOp            *RedisStreamOp `json:"clearOp,omitempty"`
 	FailOp             *RedisStreamOp `json:"failOp,omitempty"`
 	// TLS
+	TLSSecretName       *string `json:"tlsSecretName,omitempty"`
 	EnableTLS           *bool   `json:"enableTLS,omitempty"`
 	TLSInsecure         *bool   `json:"tlsInsecure,omitempty"`
 	TLSCert             *string `json:"tlsCert,omitempty"`

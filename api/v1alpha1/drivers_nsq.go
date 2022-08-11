@@ -6,9 +6,10 @@ type NSQ struct {
 	Topic             *string `json:"topic,omitempty"`
 	Channel           *string `json:"channel,omitempty"`
 	// TLS
-	EnableTLS   *bool   `json:"enableTLS,omitempty"`
-	TLSInsecure *bool   `json:"tlsInsecure,omitempty"`
-	TLSCert     *string `json:"tlsCert,omitempty"`
-	TLSKey      *string `json:"tlsKey,omitempty"`
-	TLSCA       *string `json:"tlsCA,omitempty"`
+	TLSSecretName *string `json:"tlsSecretName,omitempty"`
+	EnableTLS     *bool   `json:"enableTLS,omitempty"`
+	TLSInsecure   *bool   `json:"tlsInsecure,omitempty"`
+	TLSCert       *string `json:"tlsCert,omitempty"`
+	TLSKey        *string `json:"tlsKey,omitempty"`
+	TLSCA         *string `json:"tlsCA,omitempty"`
 }

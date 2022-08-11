@@ -16,11 +16,12 @@ type RedisList struct {
 	Key                string  `json:"key"`
 	ListLength         *string `json:"listLength,omitempty"`
 	// TLS
-	EnableTLS   *bool   `json:"enableTLS,omitempty"`
-	TLSInsecure *bool   `json:"tlsInsecure,omitempty"`
-	TLSCert     *string `json:"tlsCert,omitempty"`
-	TLSKey      *string `json:"tlsKey,omitempty"`
-	TLSCA       *string `json:"tlsCA,omitempty"`
+	TLSSecretName *string `json:"tlsSecretName,omitempty"`
+	EnableTLS     *bool   `json:"enableTLS,omitempty"`
+	TLSInsecure   *bool   `json:"tlsInsecure,omitempty"`
+	TLSCert       *string `json:"tlsCert,omitempty"`
+	TLSKey        *string `json:"tlsKey,omitempty"`
+	TLSCA         *string `json:"tlsCA,omitempty"`
 }
 
 func (d *RedisList) ConfigSecret() map[string]string {
@@ -118,9 +119,28 @@ func (d *RedisList) TriggerAuth(name string) *kedav1alpha1.TriggerAuthentication
 }
 
 func (d *RedisList) VolumeMounts() []corev1.VolumeMount {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.VolumeMount{
+		Name:      *d.TLSSecretName,
+		MountPath: "/etc/procx/tls",
+		ReadOnly:  true,
+	}
+	return []corev1.VolumeMount{v}
 }
 
 func (d *RedisList) Volumes() []corev1.Volume {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.Volume{
+		Name: *d.TLSSecretName,
+		VolumeSource: corev1.VolumeSource{
+			Secret: &corev1.SecretVolumeSource{
+				SecretName: *d.TLSSecretName,
+			},
+		},
+	}
+	return []corev1.Volume{v}
 }

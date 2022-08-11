@@ -16,28 +16,28 @@ var (
 )
 
 type Kafka struct {
-	Brokers *[]string
-	Group   *string
-	Topic   *string
+	Brokers *[]string `json:"brokers,omitempty"`
+	Group   *string   `json:"group,omitempty"`
+	Topic   *string   `json:"topic,omitempty"`
 	// TLS
-	// TODO: proper TLS support for operator
-	EnableTLS   *bool
-	TLSInsecure *bool
-	TLSCert     *string
-	TLSKey      *string
-	TLSCA       *string
+	TLSSecretName *string `json:"tlsSecretName,omitempty"`
+	EnableTLS     *bool   `json:"enableTLS,omitempty"`
+	TLSInsecure   *bool   `json:"tlsInsecure,omitempty"`
+	TLSCert       *string `json:"tlsCert,omitempty"`
+	TLSKey        *string `json:"tlsKey,omitempty"`
+	TLSCA         *string `json:"tlsCA,omitempty"`
 	// SASL
-	EnableSASL                 *bool
-	SaslType                   *KafkaSaslType
-	Username                   *string
-	Password                   *string
-	PasswordSecretName         *string
-	LagThreshold               *string
-	ActivationThreshold        *string
-	OffsetResetPolicy          *string
-	AllowIdleConsumers         *bool
-	ScaleToZeroOnInvalidOffset *bool
-	Version                    *string
+	EnableSASL                 *bool          `json:"enableSASL,omitempty"`
+	SaslType                   *KafkaSaslType `json:"saslType,omitempty"`
+	Username                   *string        `json:"username,omitempty"`
+	Password                   *string        `json:"password,omitempty"`
+	PasswordSecretName         *string        `json:"passwordSecretName,omitempty"`
+	LagThreshold               *string        `json:"lagThreshold,omitempty"`
+	ActivationThreshold        *string        `json:"activationThreshold,omitempty"`
+	OffsetResetPolicy          *string        `json:"offsetResetPolicy,omitempty"`
+	AllowIdleConsumers         *bool          `json:"allowIdleConsumers,omitempty"`
+	ScaleToZeroOnInvalidOffset *bool          `json:"scaleToZeroOnInvalidOffset,omitempty"`
+	Version                    *string        `json:"version,omitempty"`
 }
 
 func (d *Kafka) ConfigSecret() map[string]string {
@@ -169,9 +169,28 @@ func (d *Kafka) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec
 }
 
 func (d *Kafka) VolumeMounts() []corev1.VolumeMount {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.VolumeMount{
+		Name:      *d.TLSSecretName,
+		MountPath: "/etc/procx/tls",
+		ReadOnly:  true,
+	}
+	return []corev1.VolumeMount{v}
 }
 
 func (d *Kafka) Volumes() []corev1.Volume {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.Volume{
+		Name: *d.TLSSecretName,
+		VolumeSource: corev1.VolumeSource{
+			Secret: &corev1.SecretVolumeSource{
+				SecretName: *d.TLSSecretName,
+			},
+		},
+	}
+	return []corev1.Volume{v}
 }

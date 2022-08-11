@@ -29,6 +29,7 @@ type RedisStream struct {
 	ClearOp            *RedisStreamOp `json:"clearOp,omitempty"`
 	FailOp             *RedisStreamOp `json:"failOp,omitempty"`
 	// TLS
+	TLSSecretName       *string `json:"tlsSecretName,omitempty"`
 	EnableTLS           *bool   `json:"enableTLS,omitempty"`
 	TLSInsecure         *bool   `json:"tlsInsecure,omitempty"`
 	TLSCert             *string `json:"tlsCert,omitempty"`
@@ -155,9 +156,28 @@ func (d *RedisStream) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticati
 }
 
 func (d *RedisStream) VolumeMounts() []corev1.VolumeMount {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.VolumeMount{
+		Name:      *d.TLSSecretName,
+		MountPath: "/etc/procx/tls",
+		ReadOnly:  true,
+	}
+	return []corev1.VolumeMount{v}
 }
 
 func (d *RedisStream) Volumes() []corev1.Volume {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.Volume{
+		Name: *d.TLSSecretName,
+		VolumeSource: corev1.VolumeSource{
+			Secret: &corev1.SecretVolumeSource{
+				SecretName: *d.TLSSecretName,
+			},
+		},
+	}
+	return []corev1.Volume{v}
 }

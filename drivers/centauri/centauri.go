@@ -11,6 +11,7 @@ type Centauri struct {
 	URL                  string  `json:"url"`
 	PrivateKey           *[]byte `json:"privateKey,omitempty"`
 	PrivateKeySecretName *string `json:"privateKeySecretName,omitempty"`
+	TLSSecretName        *string `json:"tlsSecretName,omitempty"`
 	Channel              *string `json:"channel,omitempty"`
 	Key                  *string `json:"key,omitempty"`
 }
@@ -69,9 +70,28 @@ func (d *Centauri) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationS
 }
 
 func (d *Centauri) VolumeMounts() []corev1.VolumeMount {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.VolumeMount{
+		Name:      *d.TLSSecretName,
+		MountPath: "/etc/procx/tls",
+		ReadOnly:  true,
+	}
+	return []corev1.VolumeMount{v}
 }
 
 func (d *Centauri) Volumes() []corev1.Volume {
-	return nil
+	if d.TLSSecretName == nil || *d.TLSSecretName == "" {
+		return nil
+	}
+	v := corev1.Volume{
+		Name: *d.TLSSecretName,
+		VolumeSource: corev1.VolumeSource{
+			Secret: &corev1.SecretVolumeSource{
+				SecretName: *d.TLSSecretName,
+			},
+		},
+	}
+	return []corev1.Volume{v}
 }

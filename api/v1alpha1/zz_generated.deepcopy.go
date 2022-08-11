@@ -349,6 +349,11 @@ func (in *Centauri) DeepCopyInto(out *Centauri) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
+		*out = new(string)
+		**out = **in
+	}
 	if in.Channel != nil {
 		in, out := &in.Channel, &out.Channel
 		*out = new(string)
@@ -728,6 +733,11 @@ func (in *Kafka) DeepCopyInto(out *Kafka) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
+		*out = new(string)
+		**out = **in
+	}
 	if in.EnableTLS != nil {
 		in, out := &in.EnableTLS, &out.EnableTLS
 		*out = new(bool)
@@ -988,6 +998,11 @@ func (in *NATS) DeepCopyInto(out *NATS) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
+		*out = new(string)
+		**out = **in
+	}
 	if in.EnableTLS != nil {
 		in, out := &in.EnableTLS, &out.EnableTLS
 		*out = new(bool)
@@ -1150,6 +1165,11 @@ func (in *NSQ) DeepCopyInto(out *NSQ) {
 	}
 	if in.Channel != nil {
 		in, out := &in.Channel, &out.Channel
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
 		*out = new(string)
 		**out = **in
 	}
@@ -1603,6 +1623,11 @@ func (in *RedisList) DeepCopyInto(out *RedisList) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
+		*out = new(string)
+		**out = **in
+	}
 	if in.EnableTLS != nil {
 		in, out := &in.EnableTLS, &out.EnableTLS
 		*out = new(bool)
@@ -1655,6 +1680,11 @@ func (in *RedisPubSub) DeepCopyInto(out *RedisPubSub) {
 	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
+		*out = new(string)
+		**out = **in
+	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
 		*out = new(string)
 		**out = **in
 	}
@@ -1745,6 +1775,11 @@ func (in *RedisStream) DeepCopyInto(out *RedisStream) {
 	if in.FailOp != nil {
 		in, out := &in.FailOp, &out.FailOp
 		*out = new(RedisStreamOp)
+		**out = **in
+	}
+	if in.TLSSecretName != nil {
+		in, out := &in.TLSSecretName, &out.TLSSecretName
+		*out = new(string)
 		**out = **in
 	}
 	if in.EnableTLS != nil {
