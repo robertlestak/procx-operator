@@ -1,9 +1,10 @@
 package v1alpha1
 
+import "cloud.google.com/go/firestore"
+
 type GCPBQ struct {
 	ProjectID     string  `json:"projectId"`
-	Key           *string `json:"key,omitempty"`
-	QueryKey      *bool   `json:"queryKey,omitempty"`
+	RetrieveField *string `json:"retrieveField,omitempty"`
 	RetrieveQuery *string `json:"retrieveQuery,omitempty"`
 	ClearQuery    *string `json:"clearQuery,omitempty"`
 	FailQuery     *string `json:"failQuery,omitempty"`
@@ -45,4 +46,34 @@ type GCPGCS struct {
 	TargetObjectCount     *string   `json:"targetObjectCount,omitempty"`
 	ActivationObjectCount *string   `json:"activationObjectCount,omitempty"`
 	MaxBucketItemsToScan  *string   `json:"maxBucketItemsToScan,omitempty"`
+}
+
+type FirestoreOp string
+
+var (
+	FirestoreRMOp     = FirestoreOp("rm")
+	FirestoreMVOp     = FirestoreOp("mv")
+	FirestoreUpdateOp = FirestoreOp("update")
+)
+
+type GCPFirestoreQuery struct {
+	Path    *string              `json:"path,omitempty"`
+	Op      *string              `json:"op,omitempty"`
+	Value   *string              `json:"value,omitempty"`
+	OrderBy *string              `json:"orderBy,omitempty"`
+	Order   *firestore.Direction `json:"order,omitempty"`
+}
+
+type GCPFirestore struct {
+	RetrieveCollection      *string            `json:"retrieveCollection,omitempty"`
+	RetrieveDocument        *string            `json:"retrieveDocument,omitempty"`
+	RetrieveQuery           *GCPFirestoreQuery `json:"retrieveQuery,omitempty"`
+	RetrieveDocumentJSONKey *string            `json:"retrieveDocumentJSONKey,omitempty"`
+	ClearOp                 *FirestoreOp       `json:"clearOp,omitempty"`
+	ClearUpdate             *map[string]string `json:"clearUpdate,omitempty"`
+	ClearCollection         *string            `json:"clearCollection,omitempty"`
+	FailOp                  *FirestoreOp       `json:"failOp,omitempty"`
+	FailUpdate              *map[string]string `json:"failUpdate,omitempty"`
+	FailCollection          *string            `json:"failCollection,omitempty"`
+	ProjectID               string             `json:"projectId"`
 }

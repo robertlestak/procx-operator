@@ -7,11 +7,10 @@ type MySQL struct {
 	Password           string    `json:"password"`
 	PasswordSecretName *string   `json:"passwordSecretName,omitempty"`
 	DBName             string    `json:"dbName"`
-	QueryReturnsKey    *bool     `json:"queryReturnsKey"`
+	RetrieveField      *string   `json:"retrieveField,omitempty"`
 	RetrieveQuery      *SqlQuery `json:"retrieveQuery"`
 	FailureQuery       *SqlQuery `json:"failureQuery"`
 	ClearQuery         *SqlQuery `json:"clearQuery"`
-	Key                *string   `json:"key"`
 	TargetQueryValue   *int      `json:"targetQueryValue"`
 	ScaleQuery         *string   `json:"scaleQuery"`
 }

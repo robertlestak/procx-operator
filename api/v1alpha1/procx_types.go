@@ -40,17 +40,21 @@ type ProcXSpec struct {
 
 	// +kubebuilder:validation:Enum=Deployment;Job
 	ScalerType *ScalerType `json:"scalerType,omitempty"`
-	// +kubebuilder:validation:Enum=aws-sqs;cassandra;gcp-pubsub;mongodb;mysql;postgres;rabbitmq;redis-list;redis-pubsub
+	// +kubebuilder:validation:Enum=activemq;aws-s3;aws-sqs;cassandra;centauri;elasticsearch;fs;gcp-bq;gcp-gcs;gcp-firestore;http;kafka;mongodb;mysql;nats;nsq;postgres;rabbitmq;redis-list;redis-pubsub;redis-stream
 	DriverName         drivers.DriverName             `json:"driver"`
+	ActiveMQ           *ActiveMQ                      `json:"activemq,omitempty"`
 	AWSDynamoDB        *AWSDynamoDB                   `json:"awsDynamoDB,omitempty"`
 	AWSSQS             *AWSSQS                        `json:"awsSQS,omitempty"`
 	AWSS3              *AWSS3                         `json:"awsS3,omitempty"`
 	Cassandra          *Cassandra                     `json:"cassandra,omitempty"`
 	Centauri           *Centauri                      `json:"centauri,omitempty"`
 	Elasticsearch      *Elasticsearch                 `json:"elasticsearch,omitempty"`
+	FS                 *FS                            `json:"fs,omitempty"`
 	GCPBQ              *GCPBQ                         `json:"gcpBQ,omitempty"`
 	GCPPubSub          *GCPPubSub                     `json:"gcpPubSub,omitempty"`
 	GCPGCS             *GCPGCS                        `json:"gcpGCS,omitempty"`
+	GCPFirestore       *GCPFirestore                  `json:"gcpFirestore,omitempty"`
+	HTTP               *HTTP                          `json:"http,omitempty"`
 	Kafka              *Kafka                         `json:"kafka,omitempty"`
 	MongoDB            *MongoDB                       `json:"mongodb,omitempty"`
 	MySQL              *MySQL                         `json:"mysql,omitempty"`
@@ -58,6 +62,7 @@ type ProcXSpec struct {
 	NFS                *NFS                           `json:"nfs,omitempty"`
 	NSQ                *NSQ                           `json:"nsq,omitempty"`
 	Postgres           *Postgres                      `json:"postgres,omitempty"`
+	Pulsar             *Pulsar                        `json:"pulsar,omitempty"`
 	RabbitMQ           *RabbitMQ                      `json:"rabbitmq,omitempty"`
 	RedisList          *RedisList                     `json:"redisList,omitempty"`
 	RedisPubSub        *RedisPubSub                   `json:"redisPubSub,omitempty"`
@@ -65,6 +70,10 @@ type ProcXSpec struct {
 	Image              string                         `json:"image"`
 	HostEnv            *bool                          `json:"hostEnv,omitempty"`
 	Daemon             *bool                          `json:"daemon,omitempty"`
+	PassWorkAsArg      *bool                          `json:"passWorkAsArg,omitempty"`
+	PassWorkAsStdin    *bool                          `json:"passWorkAsStdin,omitempty"`
+	PayloadFile        *string                        `json:"payloadFile,omitempty"`
+	KeepPayloadFile    *bool                          `json:"keepPayloadFile,omitempty"`
 	BackoffLimit       *int32                         `json:"backoffLimit,omitempty"`
 	MinReplicaCount    *int32                         `json:"minReplicas,omitempty"`
 	MaxReplicaCount    *int32                         `json:"maxReplicas,omitempty"`

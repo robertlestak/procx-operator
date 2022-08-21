@@ -20,11 +20,10 @@ type Postgres struct {
 	PasswordSecretName *string          `json:"passwordSecretName,omitempty"`
 	DBName             string           `json:"dbName"`
 	SSLMode            string           `json:"sslMode"`
-	QueryReturnsKey    *bool            `json:"queryReturnsKey"`
+	RetrieveField      *string          `json:"retrieveField,omitempty"`
 	RetrieveQuery      *schema.SqlQuery `json:"retrieveQuery"`
 	FailureQuery       *schema.SqlQuery `json:"failureQuery"`
 	ClearQuery         *schema.SqlQuery `json:"clearQuery"`
-	Key                *string          `json:"key"`
 	TargetQueryValue   *int             `json:"targetQueryValue"`
 	ScaleQuery         *string          `json:"scaleQuery"`
 }
@@ -38,8 +37,8 @@ func (d *Postgres) ConfigSecret() map[string]string {
 		secData["PROCX_PSQL_PASSWORD"] = d.Password
 		secData["PROCX_PSQL_DATABASE"] = d.DBName
 		secData["PROCX_PSQL_SSL_MODE"] = d.SSLMode
-		if d.QueryReturnsKey != nil {
-			secData["PROCX_PSQL_QUERY_KEY"] = strconv.FormatBool(*d.QueryReturnsKey)
+		if d.RetrieveField != nil {
+			secData["PROCX_PSQL_RETRIEVE_FIELD"] = *d.RetrieveField
 		}
 		secData["PROCX_PSQL_RETRIEVE_QUERY"] = d.RetrieveQuery.Query
 		if d.RetrieveQuery.Params != nil {

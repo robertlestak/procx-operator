@@ -1,7 +1,6 @@
 package cassandra
 
 import (
-	"strconv"
 	"strings"
 
 	kedav1alpha1 "github.com/kedacore/keda/v2/apis/keda/v1alpha1"
@@ -17,13 +16,12 @@ type Cassandra struct {
 	PasswordSecretName *string          `json:"passwordSecretName,omitempty"`
 	Keyspace           string           `json:"keyspace"`
 	Consistency        string           `json:"consistency"`
-	QueryReturnsKey    *bool            `json:"queryReturnsKey"`
+	RetrieveField      *string          `json:"retrieveField,omitempty"`
 	RetrieveQuery      *schema.SqlQuery `json:"retrieveQuery"`
 	FailureQuery       *schema.SqlQuery `json:"failureQuery"`
 	ClearQuery         *schema.SqlQuery `json:"clearQuery"`
 	ScaleQuery         *string          `json:"scaleQuery"`
 	TargetQueryValue   *string          `json:"targetQueryValue"`
-	Key                *string          `json:"key"`
 }
 
 func (d *Cassandra) KedaSupport() bool {
@@ -40,8 +38,8 @@ func (d *Cassandra) ConfigSecret() map[string]string {
 		secData["PROCX_CASSANDRA_PASSWORD"] = *d.Password
 	}
 	secData["PROCX_CASSANDRA_KEYSPACE"] = d.Keyspace
-	if d.QueryReturnsKey != nil {
-		secData["PROCX_CASSANDRA_QUERY_KEY"] = strconv.FormatBool(*d.QueryReturnsKey)
+	if d.RetrieveField != nil {
+		secData["PROCX_CASSANDRA_RETRIEVE_FIELD"] = *d.RetrieveField
 	}
 	secData["PROCX_CASSANDRA_RETRIEVE_QUERY"] = d.RetrieveQuery.Query
 	if d.RetrieveQuery.Params != nil {

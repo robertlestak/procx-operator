@@ -7,11 +7,10 @@ type Cassandra struct {
 	PasswordSecretName *string   `json:"passwordSecretName,omitempty"`
 	Keyspace           string    `json:"keyspace"`
 	Consistency        string    `json:"consistency"`
-	QueryReturnsKey    *bool     `json:"queryReturnsKey"`
+	RetrieveField      *string   `json:"retrieveField,omitempty"`
 	RetrieveQuery      *SqlQuery `json:"retrieveQuery"`
 	FailureQuery       *SqlQuery `json:"failureQuery"`
 	ClearQuery         *SqlQuery `json:"clearQuery"`
 	ScaleQuery         *string   `json:"scaleQuery"`
 	TargetQueryValue   *string   `json:"targetQueryValue"`
-	Key                *string   `json:"key"`
 }

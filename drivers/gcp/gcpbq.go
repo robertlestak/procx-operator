@@ -1,16 +1,13 @@
 package gcp
 
 import (
-	"fmt"
-
 	kedav1alpha1 "github.com/kedacore/keda/v2/apis/keda/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
 )
 
 type GCPBQ struct {
 	ProjectID     string  `json:"projectId"`
-	Key           *string `json:"key,omitempty"`
-	QueryKey      *bool   `json:"queryKey,omitempty"`
+	RetrieveField *string `json:"retrieveField,omitempty"`
 	RetrieveQuery *string `json:"retrieveQuery,omitempty"`
 	ClearQuery    *string `json:"clearQuery,omitempty"`
 	FailQuery     *string `json:"failQuery,omitempty"`
@@ -21,8 +18,8 @@ func (d *GCPBQ) ConfigSecret() map[string]string {
 	if d.ProjectID != "" {
 		secData["PROCX_GCP_PROJECT_ID"] = d.ProjectID
 	}
-	if d.QueryKey != nil {
-		secData["PROCX_GCP_BQ_QUERY_KEY"] = fmt.Sprintf("%v", *d.QueryKey)
+	if d.RetrieveField != nil {
+		secData["PROCX_GCP_BQ_RETRIEVE_FIELD"] = *d.RetrieveField
 	}
 	if d.RetrieveQuery != nil {
 		secData["PROCX_GCP_BQ_RETRIEVE_QUERY"] = *d.RetrieveQuery

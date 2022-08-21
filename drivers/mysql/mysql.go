@@ -19,11 +19,10 @@ type MySQL struct {
 	Password           string           `json:"password"`
 	PasswordSecretName *string          `json:"passwordSecretName,omitempty"`
 	DBName             string           `json:"dbName"`
-	QueryReturnsKey    *bool            `json:"queryReturnsKey"`
+	RetrieveField      *string          `json:"retrieveField,omitempty"`
 	RetrieveQuery      *schema.SqlQuery `json:"retrieveQuery"`
 	FailureQuery       *schema.SqlQuery `json:"failureQuery"`
 	ClearQuery         *schema.SqlQuery `json:"clearQuery"`
-	Key                *string          `json:"key"`
 	TargetQueryValue   *int             `json:"targetQueryValue"`
 	ScaleQuery         *string          `json:"scaleQuery"`
 }
@@ -36,8 +35,8 @@ func (d *MySQL) ConfigSecret() map[string]string {
 		secData["PROCX_MYSQL_USER"] = d.User
 		secData["PROCX_MYSQL_PASSWORD"] = d.Password
 		secData["PROCX_MYSQL_DATABASE"] = d.DBName
-		if d.QueryReturnsKey != nil {
-			secData["PROCX_MYSQL_QUERY_KEY"] = strconv.FormatBool(*d.QueryReturnsKey)
+		if d.RetrieveField != nil {
+			secData["PROCX_MYSQL_RETRIEVE_FIELD"] = *d.RetrieveField
 		}
 		secData["PROCX_MYSQL_RETRIEVE_QUERY"] = d.RetrieveQuery.Query
 		if d.RetrieveQuery.Params != nil {

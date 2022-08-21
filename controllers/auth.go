@@ -56,6 +56,18 @@ func (r *ProcXReconciler) configSecretForProcX(m *procxv1alpha1.ProcX) corev1.Se
 	if m.Spec.Daemon != nil && *m.Spec.Daemon {
 		secData["PROCX_DAEMON"] = "true"
 	}
+	if m.Spec.PassWorkAsArg != nil && *m.Spec.PassWorkAsArg {
+		secData["PROCX_PASS_WORK_AS_ARG"] = "true"
+	}
+	if m.Spec.PassWorkAsStdin != nil && *m.Spec.PassWorkAsStdin {
+		secData["PROCX_PASS_WORK_AS_STDIN"] = "true"
+	}
+	if m.Spec.PayloadFile != nil && *m.Spec.PayloadFile != "" {
+		secData["PROCX_PAYLOAD_FILE"] = *m.Spec.PayloadFile
+	}
+	if m.Spec.KeepPayloadFile != nil && *m.Spec.KeepPayloadFile {
+		secData["PROCX_KEEP_PAYLOAD_FILE"] = "true"
+	}
 	secret := &corev1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      deployName(m.Name),

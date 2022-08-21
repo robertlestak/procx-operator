@@ -13,6 +13,14 @@ spec:
   daemon: true
   # hostEnv: boolean pass container env to process. Default false. Optional.
   hostEnv: true
+  # passWorkAsArg: boolean pass work as arg to process
+  passWorkAsArg: false
+  # passWorkAsStdin: boolean pass work as stdin to process
+  passWorkAsStdin: false
+  # payloadFile: string file to store payload rather than passing as env, arg, or stdin
+  payloadFile: ""
+  # keepPayloadFile: boolean keep payload file after use, defaut is to delete
+  keepPayloadFile: false
   # serviceAccountName: name of service account to attach to pod. Optional.
   serviceAccountName: my-service-account
 
@@ -56,15 +64,15 @@ spec:
   #   passwordSecretName: secret-containing-password
   #   keyspace: mykeyspace
   #   consistency: QUORUM
-  #   queryReturnsKey: true
+  #   retrieveField: "work"
   #   retrieveQuery:
   #     query: "SELECT id, work FROM mykeyspace.mytable WHERE status = 'pending' LIMIT 1"
   #   clearQuery:
   #     query: "DELETE FROM mykeyspace.mytable WHERE id = ?"
-  #     params: ["{{key}}"]
+  #     params: ["{{id}}"]
   #   failureQuery:
   #     query: "UPDATE mykeyspace.mytable SET status = 'failed' WHERE id = ?"
-  #     params: ["{{key}}"]
+  #     params: ["{{id}}"]
   #   scaleQuery: "SELECT COUNT(*) FROM mykeyspace.mytable WHERE status = 'pending'"
   #   targetQueryValue: "1"
 
@@ -100,7 +108,7 @@ spec:
   #   password: passwordString
   #   passwordSecretName: secret-containing-password
   #   dbName: mydb
-  #   queryReturnsKey: true
+  #   retrieveField: ""
   #   retrieveQuery:
   #     query: 'select id,work from jobs where queue = ? order by id asc limit 1'
   #     params:
@@ -109,12 +117,12 @@ spec:
   #     query: 'update jobs set failed_count = failed_count + 1 where queue = ? and id = ?'
   #     params:
   #     - myqueue
-  #     - {{key}}
+  #     - {{id}}
   #   clearQuery:
   #     query: 'delete from jobs where queue = ? and id = ?'
   #     params:
   #     - myqueue
-  #     - {{key}}
+  #     - {{id}}
   #   targetQueryValue: 1
   #   scaleQuery: "select count(id) from jobs where queue = 'myqueue'"  
 
@@ -128,7 +136,7 @@ spec:
   #   passwordSecretName: secret-containing-password
   #   dbName: mydb
   #   sslMode: disable
-  #   queryReturnsKey: true
+  #   retrieveField: ""
   #   retrieveQuery:
   #     query: 'select id,work from jobs where queue = $1 order by id asc limit 1'
   #     params:
@@ -137,12 +145,12 @@ spec:
   #     query: 'update jobs set failed_count = failed_count + 1 where queue = $1 and id = $2'
   #     params:
   #     - myqueue
-  #     - {{key}}
+  #     - {{id}}
   #   clearQuery:
   #     query: 'delete from jobs where queue = $1 and id = $2'
   #     params:
   #     - myqueue
-  #     - {{key}}
+  #     - {{id}}
   #   targetQueryValue: 1
   #   scaleQuery: "select count(id) from jobs where queue = 'myqueue'"
 

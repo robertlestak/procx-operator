@@ -35,6 +35,30 @@ spec:
           spec:
             description: ProcXSpec defines the desired state of ProcX
             properties:
+              activemq:
+                properties:
+                  address:
+                    type: string
+                  enableTLS:
+                    type: boolean
+                  name:
+                    type: string
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                  type:
+                    type: string
+                required:
+                - address
+                type: object
               awsDynamoDB:
                 properties:
                   accessKeySecretName:
@@ -169,16 +193,14 @@ spec:
                     items:
                       type: string
                     type: array
-                  key:
-                    type: string
                   keyspace:
                     type: string
                   password:
                     type: string
                   passwordSecretName:
                     type: string
-                  queryReturnsKey:
-                    type: boolean
+                  retrieveField:
+                    type: string
                   retrieveQuery:
                     properties:
                       params:
@@ -202,10 +224,8 @@ spec:
                 - consistency
                 - failureQuery
                 - hosts
-                - key
                 - keyspace
                 - password
-                - queryReturnsKey
                 - retrieveQuery
                 - scaleQuery
                 - targetQueryValue
@@ -239,17 +259,28 @@ spec:
               daemon:
                 type: boolean
               driver:
-                description: DriverName is the unique name of a driver.
                 enum:
+                - activemq
+                - aws-s3
                 - aws-sqs
                 - cassandra
-                - gcp-pubsub
+                - centauri
+                - elasticsearch
+                - fs
+                - gcp-bq
+                - gcp-gcs
+                - gcp-firestore
+                - http
+                - kafka
                 - mongodb
                 - mysql
+                - nats
+                - nsq
                 - postgres
                 - rabbitmq
                 - redis-list
                 - redis-pubsub
+                - redis-stream
                 type: string
               elasticsearch:
                 properties:
@@ -307,20 +338,95 @@ spec:
                 items:
                   type: string
                 type: array
+              fs:
+                properties:
+                  clearOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    type: object
+                  failOp:
+                    properties:
+                      bucket:
+                        type: string
+                      key:
+                        type: string
+                      keyTemplate:
+                        type: string
+                      operation:
+                        type: string
+                    type: object
+                  folder:
+                    type: string
+                  key:
+                    type: string
+                  keyPrefix:
+                    type: string
+                  keyRegex:
+                    type: string
+                type: object
               gcpBQ:
                 properties:
                   clearQuery:
                     type: string
                   failQuery:
                     type: string
-                  key:
-                    type: string
                   projectId:
                     type: string
-                  queryKey:
-                    type: boolean
+                  retrieveField:
+                    type: string
                   retrieveQuery:
                     type: string
+                required:
+                - projectId
+                type: object
+              gcpFirestore:
+                properties:
+                  clearCollection:
+                    type: string
+                  clearOp:
+                    type: string
+                  clearUpdate:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  failCollection:
+                    type: string
+                  failOp:
+                    type: string
+                  failUpdate:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  projectId:
+                    type: string
+                  retrieveCollection:
+                    type: string
+                  retrieveDocument:
+                    type: string
+                  retrieveDocumentJSONKey:
+                    type: string
+                  retrieveQuery:
+                    properties:
+                      op:
+                        type: string
+                      order:
+                        description: Direction is the sort direction for result ordering.
+                        format: int32
+                        type: integer
+                      orderBy:
+                        type: string
+                      path:
+                        type: string
+                      value:
+                        type: string
+                    type: object
                 required:
                 - projectId
                 type: object
@@ -392,6 +498,84 @@ spec:
                 type: object
               hostEnv:
                 type: boolean
+              http:
+                properties:
+                  clearRequest:
+                    properties:
+                      contentType:
+                        type: string
+                      headers:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      method:
+                        type: string
+                      successfulStatusCodes:
+                        items:
+                          type: integer
+                        type: array
+                      url:
+                        type: string
+                    required:
+                    - url
+                    type: object
+                  enableTLS:
+                    type: boolean
+                  failRequest:
+                    properties:
+                      contentType:
+                        type: string
+                      headers:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      method:
+                        type: string
+                      successfulStatusCodes:
+                        items:
+                          type: integer
+                        type: array
+                      url:
+                        type: string
+                    required:
+                    - url
+                    type: object
+                  key:
+                    type: string
+                  retrieveRequest:
+                    properties:
+                      contentType:
+                        type: string
+                      headers:
+                        additionalProperties:
+                          type: string
+                        type: object
+                      keyJsonSelector:
+                        type: string
+                      method:
+                        type: string
+                      successfulStatusCodes:
+                        items:
+                          type: integer
+                        type: array
+                      url:
+                        type: string
+                      workJsonSelector:
+                        type: string
+                    required:
+                    - url
+                    type: object
+                  tlsCA:
+                    type: string
+                  tlsCert:
+                    type: string
+                  tlsInsecure:
+                    type: boolean
+                  tlsKey:
+                    type: string
+                  tlsSecretName:
+                    type: string
+                type: object
               image:
                 type: string
               imagePullSecrets:
@@ -452,6 +636,8 @@ spec:
                   version:
                     type: string
                 type: object
+              keepPayloadFile:
+                type: boolean
               maxReplicas:
                 format: int32
                 type: integer
@@ -528,16 +714,14 @@ spec:
                     type: object
                   host:
                     type: string
-                  key:
-                    type: string
                   password:
                     type: string
                   passwordSecretName:
                     type: string
                   port:
                     type: integer
-                  queryReturnsKey:
-                    type: boolean
+                  retrieveField:
+                    type: string
                   retrieveQuery:
                     properties:
                       params:
@@ -561,10 +745,8 @@ spec:
                 - dbName
                 - failureQuery
                 - host
-                - key
                 - password
                 - port
-                - queryReturnsKey
                 - retrieveQuery
                 - scaleQuery
                 - targetQueryValue
@@ -674,6 +856,12 @@ spec:
                   topic:
                     type: string
                 type: object
+              passWorkAsArg:
+                type: boolean
+              passWorkAsStdin:
+                type: boolean
+              payloadFile:
+                type: string
               podTemplate:
                 description: PodTemplateSpec describes the data a pod should have
                   when created from a template
@@ -7792,16 +7980,14 @@ spec:
                     type: object
                   host:
                     type: string
-                  key:
-                    type: string
                   password:
                     type: string
                   passwordSecretName:
                     type: string
                   port:
                     type: integer
-                  queryReturnsKey:
-                    type: boolean
+                  retrieveField:
+                    type: string
                   retrieveQuery:
                     properties:
                       params:
@@ -7827,15 +8013,53 @@ spec:
                 - dbName
                 - failureQuery
                 - host
-                - key
                 - password
                 - port
-                - queryReturnsKey
                 - retrieveQuery
                 - scaleQuery
                 - sslMode
                 - targetQueryValue
                 - user
+                type: object
+              pulsar:
+                properties:
+                  address:
+                    type: string
+                  authCertPath:
+                    type: string
+                  authKeyPath:
+                    type: string
+                  authOAuthParams:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  authToken:
+                    type: string
+                  authTokenFile:
+                    type: string
+                  authTokenSecretName:
+                    type: string
+                  subscription:
+                    type: string
+                  tlsAllowInsecureConnection:
+                    type: boolean
+                  tlsSecretName:
+                    description: TLS
+                    type: string
+                  tlsTrustCertsFilePath:
+                    type: string
+                  tlsValidateHostname:
+                    type: boolean
+                  topic:
+                    type: string
+                  topics:
+                    items:
+                      type: string
+                    type: array
+                  topicsPattern:
+                    type: string
+                required:
+                - address
                 type: object
               rabbitmq:
                 properties:
