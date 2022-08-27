@@ -1,6 +1,8 @@
 package aws
 
 import (
+	"strconv"
+
 	kedav1alpha1 "github.com/kedacore/keda/v2/apis/keda/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
 )
@@ -9,11 +11,14 @@ type AWSDynamoDB struct {
 	Region                         *string `json:"region,omitempty"`
 	RoleARN                        *string `json:"roleARN,omitempty"`
 	Table                          *string `json:"table,omitempty"`
-	QueryKeyJSONPath               *string `json:"queryKeyJSONPath,omitempty"`
-	DataJSONPath                   *string `json:"dataJSONPath,omitempty"`
 	RetrieveQuery                  *string `json:"retrieveQuery,omitempty"`
 	ClearQuery                     *string `json:"clearQuery,omitempty"`
 	FailQuery                      *string `json:"failQuery,omitempty"`
+	IncludeNextToken               *bool   `json:"includeNextToken,omitempty"`
+	Limit                          *int64  `json:"limit,omitempty"`
+	NextToken                      *string `json:"nextToken,omitempty"`
+	RetrieveField                  *string `json:"retrieveField,omitempty"`
+	UnmarshalJSON                  *bool   `json:"unmarshalJSON,omitempty"`
 	AccessKeySecretName            *string `json:"accessKeySecretName,omitempty"`
 	IdentityOwner                  *string `json:"identityOwner,omitempty"`
 	PodIdentityProvider            *string `json:"podIdentityProvider,omitempty"`
@@ -34,11 +39,17 @@ func (d *AWSDynamoDB) ConfigSecret() map[string]string {
 	if d.Table != nil && *d.Table != "" {
 		secData["PROCX_AWS_DYNAMODB_TABLE"] = *d.Table
 	}
-	if d.QueryKeyJSONPath != nil {
-		secData["PROCX_AWS_DYNAMO_KEY_PATH"] = *d.QueryKeyJSONPath
+	if d.IncludeNextToken != nil && *d.IncludeNextToken {
+		secData["PROCX_AWS_DYNAMO_INCLUDE_NEXT_TOKEN"] = "true"
 	}
-	if d.DataJSONPath != nil {
-		secData["PROCX_AWS_DYNAMO_DATA_PATH"] = *d.DataJSONPath
+	if d.Limit != nil && *d.Limit > 0 {
+		secData["PROCX_AWS_DYNAMO_LIMIT"] = strconv.Itoa(int(*d.Limit))
+	}
+	if d.NextToken != nil && *d.NextToken != "" {
+		secData["PROCX_AWS_DYNAMO_NEXT_TOKEN"] = *d.NextToken
+	}
+	if d.RetrieveField != nil && *d.RetrieveField != "" {
+		secData["PROCX_AWS_DYNAMO_RETRIEVE_FIELD"] = *d.RetrieveField
 	}
 	if d.RetrieveQuery != nil {
 		secData["PROCX_AWS_DYNAMO_RETRIEVE_QUERY"] = *d.RetrieveQuery
@@ -48,6 +59,9 @@ func (d *AWSDynamoDB) ConfigSecret() map[string]string {
 	}
 	if d.FailQuery != nil {
 		secData["PROCX_AWS_DYNAMO_FAIL_QUERY"] = *d.FailQuery
+	}
+	if d.UnmarshalJSON != nil && *d.UnmarshalJSON {
+		secData["PROCX_AWS_DYNAMO_UNMARSHAL_JSON"] = "true"
 	}
 	return secData
 }

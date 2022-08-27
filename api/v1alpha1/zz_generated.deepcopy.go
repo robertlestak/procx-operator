@@ -46,16 +46,6 @@ func (in *AWSDynamoDB) DeepCopyInto(out *AWSDynamoDB) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.QueryKeyJSONPath != nil {
-		in, out := &in.QueryKeyJSONPath, &out.QueryKeyJSONPath
-		*out = new(string)
-		**out = **in
-	}
-	if in.DataJSONPath != nil {
-		in, out := &in.DataJSONPath, &out.DataJSONPath
-		*out = new(string)
-		**out = **in
-	}
 	if in.RetrieveQuery != nil {
 		in, out := &in.RetrieveQuery, &out.RetrieveQuery
 		*out = new(string)
@@ -69,6 +59,31 @@ func (in *AWSDynamoDB) DeepCopyInto(out *AWSDynamoDB) {
 	if in.FailQuery != nil {
 		in, out := &in.FailQuery, &out.FailQuery
 		*out = new(string)
+		**out = **in
+	}
+	if in.IncludeNextToken != nil {
+		in, out := &in.IncludeNextToken, &out.IncludeNextToken
+		*out = new(bool)
+		**out = **in
+	}
+	if in.Limit != nil {
+		in, out := &in.Limit, &out.Limit
+		*out = new(int64)
+		**out = **in
+	}
+	if in.NextToken != nil {
+		in, out := &in.NextToken, &out.NextToken
+		*out = new(string)
+		**out = **in
+	}
+	if in.RetrieveField != nil {
+		in, out := &in.RetrieveField, &out.RetrieveField
+		*out = new(string)
+		**out = **in
+	}
+	if in.UnmarshalJSON != nil {
+		in, out := &in.UnmarshalJSON, &out.UnmarshalJSON
+		*out = new(bool)
 		**out = **in
 	}
 	if in.AccessKeySecretName != nil {
@@ -530,8 +545,8 @@ func (in *Elasticsearch) DeepCopyInto(out *Elasticsearch) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.ClearQuery != nil {
-		in, out := &in.ClearQuery, &out.ClearQuery
+	if in.ClearDoc != nil {
+		in, out := &in.ClearDoc, &out.ClearDoc
 		*out = new(string)
 		**out = **in
 	}
@@ -545,8 +560,8 @@ func (in *Elasticsearch) DeepCopyInto(out *Elasticsearch) {
 		*out = new(ElasticsearchCloseOp)
 		**out = **in
 	}
-	if in.FailQuery != nil {
-		in, out := &in.FailQuery, &out.FailQuery
+	if in.FailDoc != nil {
+		in, out := &in.FailDoc, &out.FailDoc
 		*out = new(string)
 		**out = **in
 	}

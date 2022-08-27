@@ -28,10 +28,10 @@ type Elasticsearch struct {
 	TLSSecretName *string               `json:"tlsSecretName,omitempty"`
 	RetrieveIndex *string               `json:"retrieveIndex,omitempty"`
 	RetrieveQuery *string               `json:"retrieveQuery,omitempty"`
-	ClearQuery    *string               `json:"clearQuery,omitempty"`
+	ClearDoc      *string               `json:"clearDoc,omitempty"`
 	ClearIndex    *string               `json:"clearIndex,omitempty"`
 	ClearOp       *ElasticsearchCloseOp `json:"clearOp,omitempty"`
-	FailQuery     *string               `json:"failQuery,omitempty"`
+	FailDoc       *string               `json:"failDoc,omitempty"`
 	FailIndex     *string               `json:"failIndex,omitempty"`
 	FailOp        *ElasticsearchCloseOp `json:"failOp,omitempty"`
 	Key           *string               `json:"key,omitempty"`

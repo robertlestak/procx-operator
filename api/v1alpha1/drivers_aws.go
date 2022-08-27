@@ -32,11 +32,14 @@ type AWSDynamoDB struct {
 	Region                         *string `json:"region,omitempty"`
 	RoleARN                        *string `json:"roleARN,omitempty"`
 	Table                          *string `json:"table,omitempty"`
-	QueryKeyJSONPath               *string `json:"queryKeyJSONPath,omitempty"`
-	DataJSONPath                   *string `json:"dataJSONPath,omitempty"`
 	RetrieveQuery                  *string `json:"retrieveQuery,omitempty"`
 	ClearQuery                     *string `json:"clearQuery,omitempty"`
 	FailQuery                      *string `json:"failQuery,omitempty"`
+	IncludeNextToken               *bool   `json:"includeNextToken,omitempty"`
+	Limit                          *int64  `json:"limit,omitempty"`
+	NextToken                      *string `json:"nextToken,omitempty"`
+	RetrieveField                  *string `json:"retrieveField,omitempty"`
+	UnmarshalJSON                  *bool   `json:"unmarshalJSON,omitempty"`
 	AccessKeySecretName            *string `json:"accessKeySecretName,omitempty"`
 	IdentityOwner                  *string `json:"identityOwner,omitempty"`
 	PodIdentityProvider            *string `json:"podIdentityProvider,omitempty"`

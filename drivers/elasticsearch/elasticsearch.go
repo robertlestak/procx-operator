@@ -33,10 +33,10 @@ type Elasticsearch struct {
 	RetrieveSearchTargetValue           *string               `json:"retrieveSearchTargetValue,omitempty"`
 	RetrieveSearchActivationTargetValue *string               `json:"retrieveSearchActivationTargetValue,omitempty"`
 	RetrieveQuery                       *string               `json:"retrieveQuery,omitempty"`
-	ClearQuery                          *string               `json:"clearQuery,omitempty"`
+	ClearDoc                            *string               `json:"clearDoc,omitempty"`
 	ClearIndex                          *string               `json:"clearIndex,omitempty"`
 	ClearOp                             *ElasticsearchCloseOp `json:"clearOp,omitempty"`
-	FailQuery                           *string               `json:"failQuery,omitempty"`
+	FailDoc                             *string               `json:"failDoc,omitempty"`
 	FailIndex                           *string               `json:"failIndex,omitempty"`
 	FailOp                              *ElasticsearchCloseOp `json:"failOp,omitempty"`
 	Key                                 *string               `json:"key,omitempty"`
@@ -74,14 +74,14 @@ func (d *Elasticsearch) ConfigSecret() map[string]string {
 	if d.RetrieveQuery != nil && *d.RetrieveQuery != "" {
 		secData["PROCX_ELASTICSEARCH_RETRIEVE_QUERY"] = *d.RetrieveQuery
 	}
-	if d.ClearQuery != nil && *d.ClearQuery != "" {
-		secData["PROCX_ELASTICSEARCH_CLEAR_QUERY"] = *d.ClearQuery
+	if d.ClearDoc != nil && *d.ClearDoc != "" {
+		secData["PROCX_ELASTICSEARCH_CLEAR_DOC"] = *d.ClearDoc
 	}
 	if d.ClearIndex != nil && *d.ClearIndex != "" {
 		secData["PROCX_ELASTICSEARCH_CLEAR_INDEX"] = *d.ClearIndex
 	}
-	if d.FailQuery != nil && *d.FailQuery != "" {
-		secData["PROCX_ELASTICSEARCH_FAIL_QUERY"] = *d.FailQuery
+	if d.FailDoc != nil && *d.FailDoc != "" {
+		secData["PROCX_ELASTICSEARCH_FAIL_DOC"] = *d.FailDoc
 	}
 	if d.FailIndex != nil && *d.FailIndex != "" {
 		secData["PROCX_ELASTICSEARCH_FAIL_INDEX"] = *d.FailIndex
