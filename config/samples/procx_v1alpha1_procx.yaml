@@ -30,6 +30,7 @@ spec:
   # awsDynamoDB:
   #   region: us-east-1
   #   roleARN: arn:my-role
+  #   authRoleARN: arn:my-auth-role
   #   table: my-table
   #   accessKeySecretName: my-access-key
   #   identityOwner: "pod"
@@ -48,6 +49,7 @@ spec:
   # awsSQS:
   #   region: us-east-1
   #   roleARN: arn:my-role
+  #   authRoleARN: arn:my-auth-role
   #   queueURL: https://my-queue
   #   accessKeySecretName: my-access-key
   #   queueLength: "1"

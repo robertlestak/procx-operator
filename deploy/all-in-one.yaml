@@ -69,19 +69,26 @@ spec:
                 properties:
                   accessKeySecretName:
                     type: string
-                  clearQuery:
+                  authRoleARN:
                     type: string
-                  dataJSONPath:
+                  clearQuery:
                     type: string
                   failQuery:
                     type: string
                   identityOwner:
                     type: string
+                  includeNextToken:
+                    type: boolean
+                  limit:
+                    format: int64
+                    type: integer
+                  nextToken:
+                    type: string
                   podIdentityProvider:
                     type: string
-                  queryKeyJSONPath:
-                    type: string
                   region:
+                    type: string
+                  retrieveField:
                     type: string
                   retrieveQuery:
                     type: string
@@ -97,10 +104,14 @@ spec:
                     type: string
                   table:
                     type: string
+                  unmarshalJSON:
+                    type: boolean
                 type: object
               awsS3:
                 properties:
                   accessKeySecretName:
+                    type: string
+                  authRoleARN:
                     type: string
                   bucket:
                     type: string
@@ -150,6 +161,8 @@ spec:
               awsSQS:
                 properties:
                   accessKeySecretName:
+                    type: string
+                  authRoleARN:
                     type: string
                   identityOwner:
                     type: string
@@ -292,20 +305,20 @@ spec:
                 properties:
                   address:
                     type: string
+                  clearDoc:
+                    type: string
                   clearIndex:
                     type: string
                   clearOp:
                     type: string
-                  clearQuery:
-                    type: string
                   enableTLS:
                     description: TLS
                     type: boolean
+                  failDoc:
+                    type: string
                   failIndex:
                     type: string
                   failOp:
-                    type: string
-                  failQuery:
                     type: string
                   key:
                     type: string

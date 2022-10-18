@@ -17,6 +17,7 @@ type AWSS3Op struct {
 type AWSS3 struct {
 	Region              *string  `json:"region,omitempty"`
 	RoleARN             *string  `json:"roleARN,omitempty"`
+	AuthRoleARN         *string  `json:"authRoleARN,omitempty"`
 	Bucket              string   `json:"bucket"`
 	Key                 *string  `json:"key,omitempty"`
 	KeyRegex            *string  `json:"keyRegex,omitempty"`
@@ -31,6 +32,7 @@ type AWSS3 struct {
 type AWSDynamoDB struct {
 	Region                         *string `json:"region,omitempty"`
 	RoleARN                        *string `json:"roleARN,omitempty"`
+	AuthRoleARN                    *string `json:"authRoleARN,omitempty"`
 	Table                          *string `json:"table,omitempty"`
 	RetrieveQuery                  *string `json:"retrieveQuery,omitempty"`
 	ClearQuery                     *string `json:"clearQuery,omitempty"`
@@ -53,6 +55,7 @@ type AWSSQS struct {
 	Region              *string `json:"region,omitempty"`
 	QueueURL            *string `json:"queueURL,omitempty"`
 	RoleARN             *string `json:"roleARN,omitempty"`
+	AuthRoleARN         *string `json:"authRoleARN,omitempty"`
 	AccessKeySecretName *string `json:"accessKeySecretName,omitempty"`
 	QueueLength         *string `json:"queueLength,omitempty"`
 	IdentityOwner       *string `json:"identityOwner,omitempty"`

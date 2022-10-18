@@ -22,6 +22,7 @@ type AWSS3Op struct {
 type AWSS3 struct {
 	Region              *string  `json:"region,omitempty"`
 	RoleARN             *string  `json:"roleARN,omitempty"`
+	AuthRoleARN         *string  `json:"authRoleARN,omitempty"`
 	Bucket              string   `json:"bucket"`
 	Key                 *string  `json:"key,omitempty"`
 	KeyRegex            *string  `json:"keyRegex,omitempty"`
@@ -40,6 +41,9 @@ func (d *AWSS3) ConfigSecret() map[string]string {
 	}
 	if d.RoleARN != nil && *d.RoleARN != "" {
 		secData["PROCX_AWS_ROLE_ARN"] = *d.RoleARN
+	}
+	if d.AuthRoleARN != nil && *d.AuthRoleARN != "" {
+		secData["PROCX_AWS_AUTH_ROLE_ARN"] = *d.AuthRoleARN
 	}
 	if d.Bucket != "" {
 		secData["PROCX_AWS_S3_BUCKET"] = d.Bucket
@@ -110,6 +114,13 @@ func (d *AWSS3) TriggerAuth(name string) *kedav1alpha1.TriggerAuthenticationSpec
 			Key:       "PROCX_AWS_ROLE_ARN",
 		})
 	}
+	if d.AuthRoleARN != nil && *d.AuthRoleARN != "" {
+		s.SecretTargetRef = append(s.SecretTargetRef, kedav1alpha1.AuthSecretTargetRef{
+			Name:      name,
+			Parameter: "awsRoleArn",
+			Key:       "PROCX_AWS_AUTH_ROLE_ARN",
+		})
+	}
 	if d.AccessKeySecretName != nil {
 		s.SecretTargetRef = append(s.SecretTargetRef, kedav1alpha1.AuthSecretTargetRef{
 			Name:      *d.AccessKeySecretName,
@@ -129,6 +140,9 @@ func (d *AWSS3) Metadata() map[string]string {
 	md := map[string]string{}
 	if d.RoleARN != nil && *d.RoleARN != "" {
 		md["awsRoleArn"] = *d.RoleARN
+	}
+	if d.AuthRoleARN != nil && *d.AuthRoleARN != "" {
+		md["awsRoleArn"] = *d.AuthRoleARN
 	}
 	if d.IdentityOwner == nil {
 		md["identityOwner"] = "pod"

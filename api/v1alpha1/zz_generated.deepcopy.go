@@ -41,6 +41,11 @@ func (in *AWSDynamoDB) DeepCopyInto(out *AWSDynamoDB) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AuthRoleARN != nil {
+		in, out := &in.AuthRoleARN, &out.AuthRoleARN
+		*out = new(string)
+		**out = **in
+	}
 	if in.Table != nil {
 		in, out := &in.Table, &out.Table
 		*out = new(string)
@@ -146,6 +151,11 @@ func (in *AWSS3) DeepCopyInto(out *AWSS3) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AuthRoleARN != nil {
+		in, out := &in.AuthRoleARN, &out.AuthRoleARN
+		*out = new(string)
+		**out = **in
+	}
 	if in.Key != nil {
 		in, out := &in.Key, &out.Key
 		*out = new(string)
@@ -243,6 +253,11 @@ func (in *AWSSQS) DeepCopyInto(out *AWSSQS) {
 	}
 	if in.RoleARN != nil {
 		in, out := &in.RoleARN, &out.RoleARN
+		*out = new(string)
+		**out = **in
+	}
+	if in.AuthRoleARN != nil {
+		in, out := &in.AuthRoleARN, &out.AuthRoleARN
 		*out = new(string)
 		**out = **in
 	}
