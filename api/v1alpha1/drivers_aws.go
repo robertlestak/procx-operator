@@ -56,6 +56,7 @@ type AWSSQS struct {
 	QueueURL            *string `json:"queueURL,omitempty"`
 	RoleARN             *string `json:"roleARN,omitempty"`
 	AuthRoleARN         *string `json:"authRoleARN,omitempty"`
+	IncludeID           *bool   `json:"includeID,omitempty"`
 	AccessKeySecretName *string `json:"accessKeySecretName,omitempty"`
 	QueueLength         *string `json:"queueLength,omitempty"`
 	IdentityOwner       *string `json:"identityOwner,omitempty"`

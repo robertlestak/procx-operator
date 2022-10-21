@@ -261,6 +261,11 @@ func (in *AWSSQS) DeepCopyInto(out *AWSSQS) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.IncludeID != nil {
+		in, out := &in.IncludeID, &out.IncludeID
+		*out = new(bool)
+		**out = **in
+	}
 	if in.AccessKeySecretName != nil {
 		in, out := &in.AccessKeySecretName, &out.AccessKeySecretName
 		*out = new(string)

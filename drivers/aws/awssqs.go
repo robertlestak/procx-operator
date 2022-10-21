@@ -12,6 +12,7 @@ type AWSSQS struct {
 	AuthRoleARN         *string `json:"authRoleARN,omitempty"`
 	AccessKeySecretName *string `json:"accessKeySecretName,omitempty"`
 	QueueLength         *string `json:"queueLength,omitempty"`
+	IncludeID           *bool   `json:"includeID,omitempty"`
 	IdentityOwner       *string `json:"identityOwner,omitempty"`
 	PodIdentityProvider *string `json:"podIdentityProvider,omitempty"`
 }
@@ -29,6 +30,9 @@ func (d *AWSSQS) ConfigSecret() map[string]string {
 	}
 	if d.AuthRoleARN != nil && *d.AuthRoleARN != "" {
 		secData["PROCX_AWS_AUTH_ROLE_ARN"] = *d.AuthRoleARN
+	}
+	if d.IncludeID != nil && *d.IncludeID {
+		secData["PROCX_AWS_SQS_INCLUDE_ID"] = "true"
 	}
 	return secData
 }

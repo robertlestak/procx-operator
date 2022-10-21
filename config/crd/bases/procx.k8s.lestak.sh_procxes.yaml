@@ -160,6 +160,8 @@ spec:
                     type: string
                   identityOwner:
                     type: string
+                  includeID:
+                    type: boolean
                   podIdentityProvider:
                     type: string
                   queueLength:
