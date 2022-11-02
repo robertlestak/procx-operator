@@ -56,6 +56,9 @@ func (r *ProcXReconciler) podTemplateForProcX(m *procxv1alpha1.ProcX) corev1.Pod
 
 	cont.VolumeMounts = append(cont.VolumeMounts, Driver(m).VolumeMounts()...)
 	cont.EnvFrom = r.envForContainer(m)
+	if m.Spec.Env != nil {
+		cont.Env = *m.Spec.Env
+	}
 
 	podTemplate := corev1.PodTemplateSpec{
 		ObjectMeta: metav1.ObjectMeta{

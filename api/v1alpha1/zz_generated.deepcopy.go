@@ -1915,6 +1915,17 @@ func (in *ProcXSpec) DeepCopyInto(out *ProcXSpec) {
 			copy(*out, *in)
 		}
 	}
+	if in.Env != nil {
+		in, out := &in.Env, &out.Env
+		*out = new([]v1.EnvVar)
+		if **in != nil {
+			in, out := *in, *out
+			*out = make([]v1.EnvVar, len(*in))
+			for i := range *in {
+				(*in)[i].DeepCopyInto(&(*out)[i])
+			}
+		}
+	}
 	if in.EnvSecretNames != nil {
 		in, out := &in.EnvSecretNames, &out.EnvSecretNames
 		*out = new([]string)

@@ -189,6 +189,11 @@ spec:
   # envSecretNames: array of string secret names to mount to container as environment variables. Optional.
   # envSecretNames: [my-secret, my-other-secret]
 
+  # env: k8s env vars to add to container. Optional.
+  # env:
+  # - name: MY_ENV_VAR
+  #   value: my-value
+
   # commonLabels: map[string]string of labels to associate with all resources. Default empty. Optional.
   # commonLabels:
   #   hello: world

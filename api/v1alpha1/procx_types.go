@@ -82,6 +82,7 @@ type ProcXSpec struct {
 	ServiceAccountName *string                        `json:"serviceAccountName,omitempty"`
 	CommonLabels       *map[string]string             `json:"commonLabels,omitempty"`
 	ImagePullSecrets   *[]corev1.LocalObjectReference `json:"imagePullSecrets,omitempty"`
+	Env                *[]corev1.EnvVar               `json:"env,omitempty"`
 	EnvSecretNames     *[]string                      `json:"envSecretNames,omitempty"`
 	Resources          *corev1.ResourceRequirements   `json:"resources,omitempty"`
 	VolumeMounts       *[]corev1.VolumeMount          `json:"volumeMounts,omitempty"`
