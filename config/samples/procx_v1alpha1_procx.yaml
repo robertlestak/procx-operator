@@ -185,6 +185,10 @@ spec:
   # coolDownPeriod: 300
   # pollingInterval: int seconds to check data source queue. Default 30. Optional.
   # pollingInterval: 30
+  # successfulJobsHistoryLimit: int number of successful jobs to keep. Default 3. Optional.
+  # successfulJobsHistoryLimit: 3
+  # failedJobsHistoryLimit: int number of failed jobs to keep. Default 10. Optional.
+  # failedJobsHistoryLimit: 10
 
   # envSecretNames: array of string secret names to mount to container as environment variables. Optional.
   # envSecretNames: [my-secret, my-other-secret]

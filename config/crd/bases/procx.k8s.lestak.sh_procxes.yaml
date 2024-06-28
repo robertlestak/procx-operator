@@ -457,6 +457,9 @@ spec:
                 items:
                   type: string
                 type: array
+              failedJobsHistoryLimit:
+                format: int32
+                type: integer
               fs:
                 properties:
                   clearOp:
@@ -8335,6 +8338,9 @@ spec:
                 type: string
               serviceAccountName:
                 type: string
+              successfulJobsHistoryLimit:
+                format: int32
+                type: integer
               volumeMounts:
                 items:
                   description: VolumeMount describes a mounting of a Volume within

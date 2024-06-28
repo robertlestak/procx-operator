@@ -1865,6 +1865,16 @@ func (in *ProcXSpec) DeepCopyInto(out *ProcXSpec) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SuccessfulJobsHistoryLimit != nil {
+		in, out := &in.SuccessfulJobsHistoryLimit, &out.SuccessfulJobsHistoryLimit
+		*out = new(int32)
+		**out = **in
+	}
+	if in.FailedJobsHistoryLimit != nil {
+		in, out := &in.FailedJobsHistoryLimit, &out.FailedJobsHistoryLimit
+		*out = new(int32)
+		**out = **in
+	}
 	if in.BackoffLimit != nil {
 		in, out := &in.BackoffLimit, &out.BackoffLimit
 		*out = new(int32)

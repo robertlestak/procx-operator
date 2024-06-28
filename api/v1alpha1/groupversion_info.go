@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 // Package v1alpha1 contains API Schema definitions for the procx v1alpha1 API group
-//+kubebuilder:object:generate=true
-//+groupName=procx.k8s.lestak.sh
+// +kubebuilder:object:generate=true
+// +groupName=procx.k8s.lestak.sh
 package v1alpha1
 
 import (

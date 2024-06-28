@@ -107,6 +107,18 @@ func (r *ProcXReconciler) scaledJobForProcX(m *procxv1alpha1.ProcX) (*kedav1alph
 	if m.Spec.BackoffLimit != nil {
 		scaledJob.Spec.JobTargetRef.BackoffLimit = m.Spec.BackoffLimit
 	}
+	if m.Spec.FailedJobsHistoryLimit != nil {
+		scaledJob.Spec.FailedJobsHistoryLimit = m.Spec.FailedJobsHistoryLimit
+	} else {
+		i := int32(10)
+		scaledJob.Spec.FailedJobsHistoryLimit = &i
+	}
+	if m.Spec.SuccessfulJobsHistoryLimit != nil {
+		scaledJob.Spec.SuccessfulJobsHistoryLimit = m.Spec.SuccessfulJobsHistoryLimit
+	} else {
+		i := int32(3)
+		scaledJob.Spec.SuccessfulJobsHistoryLimit = &i
+	}
 	trigger, err := r.triggerForProcX(m)
 	if err != nil {
 		return nil, err
